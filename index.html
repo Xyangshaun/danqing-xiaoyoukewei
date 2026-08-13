@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>丹青有AI — 让每一个乡村孩子都能被"美"看见</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: #000;
+    color: #f5f5f7;
+    font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", -apple-system, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 0 5vw; position: relative;
+    background: radial-gradient(ellipse at 50% 40%, rgba(180,130,80,0.12) 0%, transparent 70%);
+  }
+  .hero .tag {
+    font-size: 0.8rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: rgba(245,245,247,0.5); margin-bottom: 2rem;
+    opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero h1 {
+    font-size: clamp(2.2rem, 5vw, 4.5rem); font-weight: 600;
+    letter-spacing: -0.02em; line-height: 1.15; max-width: 800px;
+    opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero h1 .accent { color: #c8a062; }
+  .hero .sub {
+    font-size: clamp(1rem, 2vw, 1.35rem); color: rgba(245,245,247,0.6);
+    margin-top: 1.5rem; max-width: 580px;
+    opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .hero .cta {
+    margin-top: 3rem;
+    opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+  }
+  .hero .cta a {
+    display: inline-block; padding: 0.9rem 2.8rem;
+    background: #f5f5f7; color: #000; border-radius: 100px;
+    font-size: 1rem; font-weight: 500; text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  .hero .cta a:hover { background: #c8a062; color: #000; transform: scale(1.03); }
+  .scroll-hint {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    opacity: 0; animation: fadeUp 0.8s 1.2s forwards;
+  }
+  .scroll-hint span { display: block; width: 1px; height: 40px; background: rgba(245,245,247,0.3); margin: 0 auto 0.5rem; }
+  .scroll-hint p { font-size: 0.7rem; letter-spacing: 0.2em; color: rgba(245,245,247,0.3); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── Sections ── */
+  section { padding: 8rem 5vw; max-width: 1100px; margin: 0 auto; }
+  section h2 {
+    font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 600;
+    letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 1rem;
+  }
+  section h2 .accent { color: #c8a062; }
+  section .lead {
+    font-size: 1.1rem; color: rgba(245,245,247,0.55); max-width: 600px; margin-bottom: 4rem;
+  }
+
+  /* ── Problem Section ── */
+  .problem .stat-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem; margin-top: 3rem;
+  }
+  .stat-card {
+    border-top: 1px solid rgba(245,245,247,0.1); padding-top: 1.5rem;
+  }
+  .stat-card .num { font-size: 2.5rem; font-weight: 600; color: #c8a062; }
+  .stat-card .label { font-size: 0.85rem; color: rgba(245,245,247,0.4); margin-top: 0.3rem; }
+
+  /* ── Features ── */
+  .features .feature-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    padding: 4rem 0; border-top: 1px solid rgba(245,245,247,0.08);
+  }
+  .feature-row .text h3 { font-size: 1.6rem; font-weight: 500; margin-bottom: 0.8rem; }
+  .feature-row .text p { color: rgba(245,245,247,0.55); font-size: 0.95rem; line-height: 1.8; }
+  .feature-row .visual {
+    background: rgba(245,245,247,0.03); border-radius: 24px;
+    aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .visual-inner {
+    text-align: center; padding: 2rem;
+  }
+  .visual-inner .icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .visual-inner .label { font-size: 0.8rem; color: rgba(245,245,247,0.3); }
+
+  /* ── Quote ── */
+  .quote {
+    text-align: center; padding: 10rem 5vw;
+    background: radial-gradient(ellipse at 50% 50%, rgba(200,160,98,0.06) 0%, transparent 70%);
+  }
+  .quote blockquote {
+    font-size: clamp(1.4rem, 3vw, 2.2rem); font-weight: 400;
+    line-height: 1.5; max-width: 750px; margin: 0 auto;
+    color: rgba(245,245,247,0.85);
+  }
+  .quote .attr { font-size: 0.8rem; color: rgba(245,245,247,0.35); margin-top: 1.5rem; }
+
+  /* ── Demo Access ── */
+  .demo-access {
+    text-align: center; padding: 8rem 5vw;
+    background: linear-gradient(180deg, transparent 0%, rgba(200,160,98,0.04) 50%, transparent 100%);
+  }
+  .demo-access .link-box {
+    display: inline-block; padding: 1.5rem 3rem;
+    border: 1px solid rgba(245,245,247,0.15); border-radius: 16px;
+    margin-top: 2rem; transition: all 0.3s;
+  }
+  .demo-access .link-box:hover { border-color: #c8a062; background: rgba(200,160,98,0.06); }
+  .demo-access .link-box a { color: #c8a062; text-decoration: none; font-size: 1rem; word-break: break-all; }
+  .demo-access .note { font-size: 0.8rem; color: rgba(245,245,247,0.3); margin-top: 1rem; }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center; padding: 4rem 5vw;
+    font-size: 0.75rem; color: rgba(245,245,247,0.2);
+  }
+
+  /* ── Reveal Animations ── */
+  .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .features .feature-row { grid-template-columns: 1fr; gap: 2rem; }
+    .feature-row:nth-child(even) .visual { order: -1; }
+    section { padding: 5rem 1.5rem; }
+    .hero { padding: 0 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+  <p class="tag">第二届「小有可为」AI向善创新挑战赛 · 乡村教育赛道</p>
+  <h1>让每一个乡村孩子<br>都能被<span class="accent">"美"</span>看见</h1>
+  <p class="sub">AI美术助教，3秒专业诊断，12133件非遗知识库。<br>乡村不缺求知的眼睛，缺的是好课堂被点亮的能力。</p>
+  <div class="cta">
+    <a href="#demo">立即体验</a>
+  </div>
+  <div class="scroll-hint">
+    <span></span>
+    <p>向下滚动</p>
+  </div>
+</section>
+
+<!-- Problem -->
+<section class="problem">
+  <h2 class="reveal">乡村美育的<span class="accent">真实困境</span></h2>
+  <p class="lead reveal">在乡村教育中，德智体劳或许还能勉强保障，但"美"——往往是最容易被忽略的。</p>
+  <div class="stat-grid">
+    <div class="stat-card reveal">
+      <div class="num">70%+</div>
+      <div class="label">乡村学校缺乏专职美术教师</div>
+    </div>
+    <div class="stat-card reveal">
+      <div class="num">12,133</div>
+      <div class="label">件非遗艺术作品，沉睡在博物馆中</div>
+    </div>
+    <div class="stat-card reveal">
+      <div class="num">3 秒</div>
+      <div class="label">AI即可完成一幅画作的专业诊断</div>
+    </div>
+    <div class="stat-card reveal">
+      <div class="num">0</div>
+      <div class="label">门槛，手机拍照即可使用</div>
+    </div>
+  </div>
+</section>
+
+<!-- Feature 1: AI Diagnosis -->
+<section class="features">
+  <div class="feature-row reveal">
+    <div class="text">
+      <h3>智绘镜 · AI即时诊断</h3>
+      <p>学生用手机拍下画作，AI在3秒内完成构图、色彩、技法三维评分，并给出可执行的改进建议。每条建议附带证据字段和优先级，如同一位随时在线的美术老师。</p>
+    </div>
+    <div class="visual">
+      <div class="visual-inner">
+        <div class="icon">🎨</div>
+        <div style="font-size:1.2rem;font-weight:500;margin-bottom:0.5rem;">作品分析报告</div>
+        <div style="display:flex;gap:1.5rem;justify-content:center;margin-top:1rem;">
+          <div><div style="font-size:1.5rem;color:#c8a062;">85</div><div class="label">构图</div></div>
+          <div><div style="font-size:1.5rem;color:#c8a062;">72</div><div class="label">色彩</div></div>
+          <div><div style="font-size:1.5rem;color:#c8a062;">90</div><div class="label">技法</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feature 2: Knowledge Base -->
+  <div class="feature-row reveal">
+    <div class="visual">
+      <div class="visual-inner">
+        <div class="icon">🏛️</div>
+        <div style="font-size:1.2rem;font-weight:500;margin-bottom:0.5rem;">非遗知识库</div>
+        <div style="font-size:2rem;color:#c8a062;font-weight:600;">12,133</div>
+        <div class="label">件非遗艺术作品</div>
+        <div style="margin-top:1rem;display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;">
+          <span style="background:rgba(245,245,247,0.06);padding:0.3rem 0.8rem;border-radius:100px;font-size:0.75rem;">敦煌壁画</span>
+          <span style="background:rgba(245,245,247,0.06);padding:0.3rem 0.8rem;border-radius:100px;font-size:0.75rem;">青绿山水</span>
+          <span style="background:rgba(245,245,247,0.06);padding:0.3rem 0.8rem;border-radius:100px;font-size:0.75rem;">剪纸</span>
+        </div>
+      </div>
+    </div>
+    <div class="text">
+      <h3>灵感铺 · 非遗知识库</h3>
+      <p>12,133件非遗艺术作品按年代、流派、技法分类。教师可直接用于课堂展示，让学生看见中国最美的文化遗产。乡村孩子也能与敦煌壁画、青绿山水"对话"。</p>
+    </div>
+  </div>
+
+  <!-- Feature 3: Emotion Canvas -->
+  <div class="feature-row reveal">
+    <div class="text">
+      <h3>情绪画布 · 用画画表达内心</h3>
+      <p>18种东方情绪可视化，432种灵感组合。画画是成本最低的自我表达——开心时色彩浓郁，不开心时灰暗伤感。任何心情，画出来就对了。</p>
+    </div>
+    <div class="visual">
+      <div class="visual-inner">
+        <div class="icon">🖌️</div>
+        <div style="font-size:1.2rem;font-weight:500;margin-bottom:0.5rem;">情绪画布</div>
+        <div style="display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;margin-top:1rem;">
+          <span style="background:#c8a062;padding:0.3rem 0.8rem;border-radius:100px;font-size:0.75rem;color:#000;">喜悦</span>
+          <span style="background:rgba(245,245,247,0.06);padding:0.3rem 0.8rem;border-radius:100px;font-size:0.75rem;">宁静</span>
+          <span style="background:rgba(245,245,247,0.06);padding:0.3rem 0.8rem;border-radius:100px;font-size:0.75rem;">思念</span>
+          <span style="background:rgba(245,245,247,0.06);padding:0.3rem 0.8rem;border-radius:100px;font-size:0.75rem;">忧伤</span>
+        </div>
+        <div style="font-size:2rem;margin-top:1rem;">→ 🎨</div>
+        <div class="label">AI生成东方色板，自由手绘创作</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feature 4: Teacher Dashboard -->
+  <div class="feature-row reveal">
+    <div class="visual">
+      <div class="visual-inner">
+        <div class="icon">📊</div>
+        <div style="font-size:1.2rem;font-weight:500;margin-bottom:0.5rem;">教师工作台</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-top:1rem;">
+          <div style="background:rgba(245,245,247,0.04);padding:0.8rem;border-radius:12px;"><div style="font-size:1.2rem;color:#c8a062;">32</div><div class="label">班级学生</div></div>
+          <div style="background:rgba(245,245,247,0.04);padding:0.8rem;border-radius:12px;"><div style="font-size:1.2rem;color:#c8a062;">128</div><div class="label">诊断记录</div></div>
+          <div style="background:rgba(245,245,247,0.04);padding:0.8rem;border-radius:12px;"><div style="font-size:1.2rem;color:#c8a062;">+15%</div><div class="label">平均进步</div></div>
+          <div style="background:rgba(245,245,247,0.04);padding:0.8rem;border-radius:12px;"><div style="font-size:1.2rem;color:#c8a062;">3</div><div class="label">待处理争议</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="text">
+      <h3>教师工作台 · 备课提效</h3>
+      <p>班级管理、学情大盘、争议仲裁——为乡村教师提供一站式教学管理工具。学生画作自动归档，成长曲线一目了然，让老师把时间花在最重要的事上：陪伴孩子。</p>
+    </div>
+  </div>
+</section>
+
+<!-- Quote -->
+<section class="quote">
+  <div class="reveal">
+    <blockquote>
+      "世界的未来在孩子们身上，<br>没有什么事业能比为孩子们创作更为幸福。"
+    </blockquote>
+    <p class="attr">—— 蔡皋，2026年国际安徒生奖插画家奖获得者<br>60年来首位获奖的中国画家</p>
+  </div>
+</section>
+
+<!-- Demo Access -->
+<section class="demo-access" id="demo">
+  <h2 class="reveal">体验<span class="accent"> Demo</span></h2>
+  <p class="lead reveal" style="margin:1rem auto 0;">无需注册，打开浏览器即可使用全部功能</p>
+  <div class="reveal">
+    <div class="link-box">
+      <a href="https://xyangshaun.github.io/danqing-ai/" target="_blank">xyangshaun.github.io/danqing-ai</a>
+    </div>
+    <p class="note">手机 / 平板 / 电脑均可访问 · 弱网环境有智能回退</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>丹青有AI · 第二届「小有可为」AI向善创新挑战赛 · 乡村教育赛道 · 方向二：课堂&课后助教</p>
+  <p style="margin-top:0.5rem;">© 2026 Danqing AI. 让每一个乡村孩子都能被"美"看见。</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
